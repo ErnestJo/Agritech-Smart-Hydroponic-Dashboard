@@ -97,15 +97,47 @@
     </script>
     <!--script src="./Waziup.js"></script-->
     <script>
+        var maxH =0, minH=0;
+
         Waziup.ApiClient.instance.basePath = 'https://api.waziup.io/api/v1'
         var api = new Waziup.SensorsApi()
         api.getMeasurement("waziup", "ISPACE_Sensor4", "TC").then((meas) =>{
 
             document.getElementById("temp_sensor_value").innerHTML = meas.last_value + " C";
+            if(meas.last_value>30){
+                document.getElementById('temp_status').src = "images/png/cancel.png"
+            }
+            else {
+                document.getElementById('temp_status').src = "images/png/checked.png"
+            }
         })
-        api.getMeasurement("waziup", "ISPACE_Sensor4", "SM").then((meas) =>{
+        //water level
+        api.getMeasurement("waziup", "ISPACE_Sensor4", "HL").then((meas) =>{
 
-            document.getElementById("ph_sensor_value").innerHTML = meas.last_value + " C";
+            if(meas.last_value< 900){
+                document.getElementById('level_sensor_value').innerHTML = "Normal";
+                document.getElementById('level_status').src = "images/png/checked.png"
+            }
+            else{
+                document.getElementById('level_sensor_value').innerHTML = "Low";
+                document.getElementById('level_status').src = "images/png/cancel.png"
+            }
+
+
+        })
+        //check the water level
+
+        //tank water level
+        api.getMeasurement("waziup", "ISPACE_Sensor4", "TL").then((meas) =>{
+
+            document.getElementById("tank_sensor_value").innerHTML = meas.last_value + "%";
+
+            if(meas.last_value<10){
+                document.getElementById('tank_status').src = "images/png/cancel.png"
+            }
+            else {
+                document.getElementById('tank_status').src = "images/png/checked.png"
+            }
         })
     </script>
 
@@ -292,7 +324,7 @@
                                 </div>
                                 <div class="stat-content">
                                     <div class="text-left dib"> 
-                                        <div class="stat-text"><span  id="ph_sensor_value">Loading...</span></div>
+                                        <div class="stat-text"><span  id="ph_sensor_value">7</span></div>
                                         <div class="stat-heading">PH reading</div>
                                     </div>
                                 </div>
@@ -311,7 +343,7 @@
                                 </div>
                                 <div class="stat-content">
                                     <div class="text-left dib">
-                                        <div class="stat-text"><span class="count">3435</span></div>
+                                        <div class="stat-text"><span id="level_sensor_value">Loading...</span></div>
                                         <div class="stat-heading">Water level</div>
                                     </div>
                                 </div>
@@ -349,7 +381,7 @@
                                 </div>
                                 <div class="stat-content">
                                     <div class="text-left dib"> 
-                                        <div class="stat-text"><span class="count">700</span></div>
+                                        <div class="stat-text"><span id="tank_sensor_value">Loading...</span></div>
                                         <div class="stat-heading">Tank level</div>
                                     </div>
                                 </div>
@@ -376,28 +408,28 @@
                                                         <label>
                                                             <img src="images/png/008-test.png"
                                                                  width="40" height="40"><span>PH status</span>
-                                                            <a><img src="images/png/checked.png" width="20" height="20"></a>
+                                                            <a><img id="ph_status" src="images/png/checked.png" width="20" height="20"></a>
                                                         </label>
                                                     </li>
                                                     <li>
                                                         <label>
                                                             <img src="images/png/009-arrow-up-water-level.png"
                                                                  width="40" height="40"><span>Water level status</span>
-                                                            <a><img src="images/png/cancel.png" width="20" height="20"></a>
+                                                            <a><img id="level_status" src="images/png/cancel.png" width="20" height="20"></a>
                                                         </label>
                                                     </li>
                                                     <li>
                                                         <label>
                                                             <img src="images/png/007-thermometer.png"
                                                                  width="40" height="40"><span>Temperature status</span>
-                                                            <a><img src="images/png/checked.png" width="20" height="20"></a>
+                                                            <a><img id="temp_status" src="images/png/checked.png" width="20" height="20"></a>
                                                         </label>
                                                     </li>
                                                     <li>
                                                         <label>
                                                             <img src="images/png/water-tank.png"
                                                                  width="40" height="40"><span>Tank water level status </span>
-                                                            <a><img src="images/png/checked.png" width="20" height="20"></a>
+                                                            <a><img id="tank_status" src="images/png/checked.png" width="20" height="20"></a>
                                                         </label>
                                                     </li>
                                                 </ul>
@@ -958,6 +990,8 @@
                 $jq('#tank').show();
                 $jq('#ph').hide();
             });
+
+
 
 
 
