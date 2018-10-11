@@ -65,6 +65,50 @@
 
     </style>
 
+    <script src="https://cdn.jsdelivr.net/npm/waziup-js@0.0.18/lib/Waziup.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
+    <script>
+        Waziup.ApiClient.instance.basePath = 'https://api.waziup.io/api/v1'
+        var api = new Waziup.SensorsApi()
+        var data = []
+        var labels = []
+        api.getMeasurementValues("waziup", "ISPACE_Sensor4", "TC", {'lastN': "20"}).then((values) =>{
+            console.log("data" + JSON.stringify(values))
+            for(value of values) {
+                data.push(value.value)
+                labels.push(value.timestamp)
+            }
+            var ctx = document.getElementById("ph-chart").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Sensor values',
+                        data: data
+                    }]
+                },
+                options: {
+                    responsive: false
+                }
+            });
+        })
+    </script>
+    <!--script src="./Waziup.js"></script-->
+    <script>
+        Waziup.ApiClient.instance.basePath = 'https://api.waziup.io/api/v1'
+        var api = new Waziup.SensorsApi()
+        api.getMeasurement("waziup", "ISPACE_Sensor4", "TC").then((meas) =>{
+
+            document.getElementById("temp_sensor_value").innerHTML = meas.last_value + " C";
+        })
+        api.getMeasurement("waziup", "ISPACE_Sensor4", "SM").then((meas) =>{
+
+            document.getElementById("ph_sensor_value").innerHTML = meas.last_value + " C";
+        })
+    </script>
+
 </head>
 <body>
 
@@ -75,32 +119,27 @@
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active">
-                        <a href="index.html"><i class="menu-icon fa fa-laptop"></i>Dashboard</a>
+                        <a id="home-btn" href="#"><i class="menu-icon fa fa-laptop"></i>Dashboard</a>
                     </li>
                     <li class="menu-title">Sensors</li><!-- /.menu-title -->
                     <li class="menu-item">
-                        <a href="#" aria-haspopup="true" aria-expanded="false"> <img src="images/png/013-test-1.png"
+                        <a id="ph-btn" href="#" aria-haspopup="true" aria-expanded="false"> <img src="images/png/013-test-1.png"
                                                                                      width="20" height="20">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  Ph</a>
 
                     </li>
                     <li class="menu-item">
-                        <a href="#" aria-haspopup="true" aria-expanded="false"> <img src="images/png/012-arrow-up-water-level-1.png"
+                        <a id="level-btn" href="#" aria-haspopup="true" aria-expanded="false"> <img src="images/png/012-arrow-up-water-level-1.png"
                                                                                      width="20" height="20">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Water Level</a>
 
                     </li>
                     <li class="menu-item">
-                        <a href="#" aria-haspopup="true" aria-expanded="false"> <img src="images/png/014-thermometer-1.png"
+                        <a id="temp-btn" href="#" aria-haspopup="true" aria-expanded="false"> <img src="images/png/014-thermometer-1.png"
                                                                                      width="20" height="20">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Temperature</a>
 
                     </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img src="images/png/011-planting-1.png"
-                                                                                                                                    width="20" height="20">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Nutrients</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-fort-awesome"></i><a href="font-fontawesome.html">Nitrogen</a></li>
-                            <li><i class="menu-icon ti-themify-logo"></i><a href="font-themify.html">Potassium</a></li>
-                            <li><i class="menu-icon ti-themify-logo"></i><a href="font-themify.html">Phosphorous</a></li>
-                        </ul>
+                    <li class="menu-item">
+                        <a id="tank-btn" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img src="images/png/water-tank%20(1).png"
+                                                                                                                                    width="20" height="20">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Tank level</a>
                     </li>
 
                     <li class="menu-title">History</li><!-- /.menu-title -->
@@ -119,14 +158,9 @@
                                                                                      width="20" height="20">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Temperature</a>
 
                     </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img src="images/png/011-planting-1.png"
-                                                                                                                                    width="20" height="20">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Nutrients</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-fort-awesome"></i><a href="font-fontawesome.html">Nitrogen</a></li>
-                            <li><i class="menu-icon ti-themify-logo"></i><a href="font-themify.html">Potassium</a></li>
-                            <li><i class="menu-icon ti-themify-logo"></i><a href="font-themify.html">Phosphorous</a></li>
-                        </ul>
+                    <li class="menu-item">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img src="images/png/water-tank%20(1).png"
+                                                                                                                                    width="20" height="20">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Tank level</a>
                     </li>
 
                 </ul>
@@ -244,7 +278,7 @@
         <!-- Header-->
 
 
-        <div class="content pb-0">
+        <div class="content pb-0 fadeInUp"  id="home">
 
             <!-- Widgets  -->
             <div class="row">
@@ -258,7 +292,7 @@
                                 </div>
                                 <div class="stat-content">
                                     <div class="text-left dib"> 
-                                        <div class="stat-text">$<span class="count">23569</span></div>
+                                        <div class="stat-text"><span  id="ph_sensor_value">Loading...</span></div>
                                         <div class="stat-heading">PH reading</div>
                                     </div>
                                 </div>
@@ -296,7 +330,7 @@
                                 </div>
                                 <div class="stat-content">
                                     <div class="text-left dib"> 
-                                        <div class="stat-text"><span class="count">349</span></div>
+                                        <div class="stat-text"><span  id="temp_sensor_value">Loading...</span></div>
                                         <div class="stat-heading">Temperature</div>
                                     </div>
                                 </div>
@@ -310,13 +344,13 @@
                         <div class="card-body">
                             <div class="stat-widget-five">
                                 <div class="stat-icon dib flat-color-4">
-                                    <img src="images/png/010-planting.png"
+                                    <img src="images/png/water-tank.png"
                                          width="56" height="56">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                                 </div>
                                 <div class="stat-content">
                                     <div class="text-left dib"> 
                                         <div class="stat-text"><span class="count">700</span></div>
-                                        <div class="stat-heading">Nutrients</div>
+                                        <div class="stat-heading">Tank level</div>
                                     </div>
                                 </div>
                             </div>
@@ -361,8 +395,8 @@
                                                     </li>
                                                     <li>
                                                         <label>
-                                                            <img src="images/png/010-planting.png"
-                                                                 width="40" height="40"><span>Nutrient status </span>
+                                                            <img src="images/png/water-tank.png"
+                                                                 width="40" height="40"><span>Tank water level status </span>
                                                             <a><img src="images/png/checked.png" width="20" height="20"></a>
                                                         </label>
                                                     </li>
@@ -399,6 +433,202 @@
 
         </div> <!-- .content -->
 
+        <div class="content pb-0 fadeInUp" style="display: none;"  id="ph">
+
+            <!-- Widgets  -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="stat-widget-five">
+                                <div class="stat-icon dib flat-color-1">
+                                    <img src="images/png/008-test.png"
+                                         width="56" height="56">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                </div>
+                                <div class="stat-content">
+                                    <div class="text-left dib">
+                                        <div class="card-title"><h1>Ph</h1></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- Widgets End -->
+
+            <div class="clearfix"></div>
+
+            <div class="animated fadeIn">
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="mb-3">Charts</h4>
+                                <canvas width="1000" height="500" id="ph-chart"></canvas>
+                            </div>
+                        </div>
+                    </div><!-- /# column -->
+
+
+
+
+
+                </div>
+
+            </div><!-- .animated -->
+        </div> <!-- .content -->
+
+        <div class="content pb-0"  style="display: none;" id="water-level">
+
+            <!-- Widgets  -->
+            <div class="row">
+                <div class="col-lg-5 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="stat-widget-five">
+                                <div class="stat-icon dib flat-color-2">
+                                    <img src="images/png/009-arrow-up-water-level.png"
+                                         width="56" height="56">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                </div>
+                                <div class="stat-content">
+                                    <div class="text-left dib">
+                                        <div class="card-title"><h1>Water level</h1></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- Widgets End -->
+
+            <div class="clearfix"></div>
+
+            <div class="animated fadeIn">
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="mb-3">Charts</h4>
+                                <canvas width="1000" height="500" id="level-chart"></canvas>
+                            </div>
+                        </div>
+                    </div><!-- /# column -->
+
+
+
+
+
+                </div>
+
+            </div><!-- .animated -->
+        </div> <!-- .content -->
+
+        <div class="content pb-0" style="display: none;" id="temp">
+
+            <!-- Widgets  -->
+            <div class="row">
+                <div class="col-lg-5 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="stat-widget-five">
+                                <div class="stat-icon dib flat-color-3">
+                                    <img src="images/png/007-thermometer.png"
+                                         width="56" height="56">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                </div>
+                                <div class="stat-content">
+                                    <div class="text-left dib">
+                                        <div class="card-title"><h1>Temperature</h1></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- Widgets End -->
+
+            <div class="clearfix"></div>
+
+            <div class="animated fadeIn">
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="mb-3">Charts</h4>
+                                <canvas width="1000" height="500" id="temp-chart"></canvas>
+                            </div>
+                        </div>
+                    </div><!-- /# column -->
+
+
+
+
+
+                </div>
+
+            </div><!-- .animated -->
+        </div> <!-- .content -->
+
+        <div class="content pb-0" style="display: none;" id="tank">
+
+            <!-- Widgets  -->
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="stat-widget-five">
+                                <div class="stat-icon dib flat-color-1">
+                                    <img src="images/png/008-test.png"
+                                         width="56" height="56">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                </div>
+                                <div class="stat-content">
+                                    <div class="text-left dib">
+                                        <div class="card-title"><h1>Tank Water level</h1></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- Widgets End -->
+
+            <div class="clearfix"></div>
+
+            <div class="animated fadeIn">
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="mb-3">Charts</h4>
+                                <canvas width="1000" height="500" id="tank-chart"></canvas>
+                            </div>
+                        </div>
+                    </div><!-- /# column -->
+
+
+
+
+
+                </div>
+
+            </div><!-- .animated -->
+        </div> <!-- .content -->
+
 
 
         <div class="clearfix"></div>
@@ -417,6 +647,7 @@
         </footer>
 
     </div><!-- /#right-panel -->
+
 
 
     <script src="assets/js/vendor/jquery-2.1.4.min.js"></script>
@@ -672,6 +903,65 @@
             // Bar Chart #flotBarChart End
 
         });  // End of Document Ready 
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        var $jq = jQuery.noConflict();
+
+        $jq(document).ready(function () {
+            $jq("#ph-btn").click(function () {
+                //hide all divs except ph
+
+                $jq('#home').hide();
+                $jq('#water-level').hide();
+                $jq('#temp').hide();
+                $jq('#tank').hide();
+                $jq('#ph').show();
+            });
+
+            $jq("#temp-btn").click(function () {
+                //hide all divs except ph
+
+                $jq('#home').hide();
+                $jq('#water-level').hide();
+                $jq('#temp').show();
+                $jq('#tank').hide();
+                $jq('#ph').hide();
+            });
+
+            $jq("#home-btn").click(function () {
+                //hide all divs except ph
+
+                $jq('#home').show();
+                $jq('#water-level').hide();
+                $jq('#temp').hide();
+                $jq('#tank').hide();
+                $jq('#ph').hide();
+            });
+
+            $jq("#level-btn").click(function () {
+                //hide all divs except ph
+
+                $jq('#home').hide();
+                $jq('#water-level').show();
+                $jq('#temp').hide();
+                $jq('#tank').hide();
+                $jq('#ph').hide();
+            });
+
+            $jq("#tank-btn").click(function () {
+                //hide all divs except ph
+
+                $jq('#home').hide();
+                $jq('#water-level').hide();
+                $jq('#temp').hide();
+                $jq('#tank').show();
+                $jq('#ph').hide();
+            });
+
+
+
+        });
     </script>
 
 

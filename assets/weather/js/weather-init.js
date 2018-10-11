@@ -38,7 +38,7 @@
 
 
     // init
-    loadWeather('New York City', '');
+    loadWeather('Dar es salaam', '');
 
 })(jQuery);
 
@@ -68,7 +68,7 @@
 
 
     // init
-    loadWeather('New York City', '');
+    loadWeather('Dar es salaam', '');
 
 })(jQuery);
 
@@ -129,7 +129,7 @@
 
 
     // init
-    loadWeather('New York', '');
+    loadWeather('Dar es salaam', '');
 
 })(jQuery);
 
