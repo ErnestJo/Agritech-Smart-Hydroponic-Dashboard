@@ -103,14 +103,16 @@
 
             if(data<10){
                 document.getElementById('tank_status').src = "images/png/cancel.png";
+                document.getElementById('level_sensor_value').innerHTML = "Low";
+                document.getElementById('level_status').src = "images/png/cancel.png";
 
-                document.getElementById('level_sensor_value').innerHTML = "Normal";
-                document.getElementById('level_status').src = "images/png/checked.png"
             }
             else {
                 document.getElementById('tank_status').src = "images/png/checked.png";
-                document.getElementById('level_sensor_value').innerHTML = "Low";
-                document.getElementById('level_status').src = "images/png/cancel.png"
+
+
+                document.getElementById('level_sensor_value').innerHTML = "Normal";
+                document.getElementById('level_status').src = "images/png/checked.png";
             }
         });
     </script>
@@ -145,51 +147,51 @@
         })
     </script>
     <!--script src="./Waziup.js"></script-->
-    <script>
-        var maxH =0, minH=0;
+    <!--<script>-->
+        <!--var maxH =0, minH=0;-->
 
-        Waziup.ApiClient.instance.basePath = 'https://api.waziup.io/api/v1'
-        var api = new Waziup.SensorsApi()
-        api.getMeasurement("waziup", "AGRITECHS_Sensor4", "TC", {'lastN': "1"}).then((value) =>{
-            console.log(value);
-            // console.log("data" + JSON.stringify(values))
-            document.getElementById("temp_sensor_value").innerHTML = meas.last_value + " C";
-            if(meas.last_value>30){
-                document.getElementById('temp_status').src = "images/png/cancel.png";
-            }
-            else {
-                document.getElementById('temp_status').src = "images/png/checked.png";
-            }
-        });
-        //water level
-        api.getMeasurement("waziup", "AGRITECHS_Sensor4", "HL").then((meas) =>{
+        <!--Waziup.ApiClient.instance.basePath = 'https://api.waziup.io/api/v1'-->
+        <!--var api = new Waziup.SensorsApi()-->
+        <!--api.getMeasurement("waziup", "AGRITECHS_Sensor4", "TC", {'lastN': "1"}).then((value) =>{-->
+            <!--console.log(value);-->
+            <!--// console.log("data" + JSON.stringify(values))-->
+            <!--document.getElementById("temp_sensor_value").innerHTML = meas.last_value + " C";-->
+            <!--if(meas.last_value>30){-->
+                <!--document.getElementById('temp_status').src = "images/png/cancel.png";-->
+            <!--}-->
+            <!--else {-->
+                <!--document.getElementById('temp_status').src = "images/png/checked.png";-->
+            <!--}-->
+        <!--});-->
+        <!--//water level-->
+        <!--api.getMeasurement("waziup", "AGRITECHS_Sensor4", "HL").then((meas) =>{-->
 
-            if(meas.last_value< 900){
-                document.getElementById('level_sensor_value').innerHTML = "Normal";
-                document.getElementById('level_status').src = "images/png/checked.png"
-            }
-            else{
-                document.getElementById('level_sensor_value').innerHTML = "Low";
-                document.getElementById('level_status').src = "images/png/cancel.png"
-            }
+            <!--if(meas.last_value< 900){-->
+                <!--document.getElementById('level_sensor_value').innerHTML = "Normal";-->
+                <!--document.getElementById('level_status').src = "images/png/checked.png"-->
+            <!--}-->
+            <!--else{-->
+                <!--document.getElementById('level_sensor_value').innerHTML = "Low";-->
+                <!--document.getElementById('level_status').src = "images/png/cancel.png"-->
+            <!--}-->
 
 
-        });
-        //check the water level
+        <!--});-->
+        <!--//check the water level-->
 
-        //tank water level
-        api.getMeasurement("waziup", "AGRITECHS_Sensor4", "TL").then((meas) =>{
+        <!--//tank water level-->
+        <!--api.getMeasurement("waziup", "AGRITECHS_Sensor4", "TL").then((meas) =>{-->
 
-            document.getElementById("tank_sensor_value").innerHTML = meas.last_value + "%";
+            <!--document.getElementById("tank_sensor_value").innerHTML = meas.last_value + "%";-->
 
-            if(meas.last_value<10){
-                document.getElementById('tank_status').src = "images/png/cancel.png"
-            }
-            else {
-                document.getElementById('tank_status').src = "images/png/checked.png"
-            }
-        })
-    </script>
+            <!--if(meas.last_value<10){-->
+                <!--document.getElementById('tank_status').src = "images/png/cancel.png"-->
+            <!--}-->
+            <!--else {-->
+                <!--document.getElementById('tank_status').src = "images/png/checked.png"-->
+            <!--}-->
+        <!--})-->
+    <!--</script>-->
 
 
 </head>
