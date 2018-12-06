@@ -118,17 +118,15 @@
     </script>
 
     <script>
-        Waziup.ApiClient.instance.basePath = 'https://api.waziup.io/api/v1'
-        var api = new Waziup.SensorsApi()
-        var data = []
-        var labels = []
+        Waziup.ApiClient.instance.basePath = 'https://api.waziup.io/api/v1';
+        var api = new Waziup.SensorsApi();
+        var data = [];
+        var labels = [];
         api.getMeasurementValues("waziup", "AGRITECHS_Sensor4", "TC", {'lastN': "1"}).then((values) =>{
-            console.log("data" + JSON.stringify(values))
-            var val = JSON.
-            console.log(val[3]);
+            console.log("data" + JSON.stringify(values));
             for(value of values) {
-                data.push(value.value)
-                labels.push(value.timestamp)
+                data.push(value.value);
+                labels.push(value.timestamp);
             }
             var ctx = document.getElementById("ph-chart").getContext('2d');
             var myChart = new Chart(ctx, {
@@ -144,56 +142,74 @@
                     responsive: false
                 }
             });
-        })
+        });
+
+        api.getMeasurementValues('waziup', "AGRITECHS_Sensor4", "TL", {'lastN': "1"}).then((values) =>{
+            for(value of values) {
+                data.push(value.value);
+                labels.push(value.timestamp);
+            }
+            var ctx = document.getElementById("tank-chart").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Sensor values',
+                        data: data
+                    }]
+                },
+                options: {
+                    responsive: false
+                }
+            });
+
+        });
+
+        api.getMeasurementValues("waziup", "AGRITECHS_Sensor4", "TC", {'lastN': "1"}).then((values) =>{
+            console.log("data" + JSON.stringify(values));
+            for(value of values) {
+                data.push(value.value);
+                labels.push(value.timestamp);
+            }
+            var ctx = document.getElementById("temp-chart").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Sensor values',
+                        data: data
+                    }]
+                },
+                options: {
+                    responsive: false
+                }
+            });
+        });
+
+        api.getMeasurementValues("waziup", "AGRITECHS_Sensor4", "TC", {'lastN': "1"}).then((values) =>{
+            console.log("data" + JSON.stringify(values));
+            for(value of values) {
+                data.push(value.value);
+                labels.push(value.timestamp);
+            }
+            var ctx = document.getElementById("level-chart").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Sensor values',
+                        data: data
+                    }]
+                },
+                options: {
+                    responsive: false
+                }
+            });
+        });
     </script>
-    <!--script src="./Waziup.js"></script-->
-    <!--<script>-->
-        <!--var maxH =0, minH=0;-->
-
-        <!--Waziup.ApiClient.instance.basePath = 'https://api.waziup.io/api/v1'-->
-        <!--var api = new Waziup.SensorsApi()-->
-        <!--api.getMeasurement("waziup", "AGRITECHS_Sensor4", "TC", {'lastN': "1"}).then((value) =>{-->
-            <!--console.log(value);-->
-            <!--// console.log("data" + JSON.stringify(values))-->
-            <!--document.getElementById("temp_sensor_value").innerHTML = meas.last_value + " C";-->
-            <!--if(meas.last_value>30){-->
-                <!--document.getElementById('temp_status').src = "images/png/cancel.png";-->
-            <!--}-->
-            <!--else {-->
-                <!--document.getElementById('temp_status').src = "images/png/checked.png";-->
-            <!--}-->
-        <!--});-->
-        <!--//water level-->
-        <!--api.getMeasurement("waziup", "AGRITECHS_Sensor4", "HL").then((meas) =>{-->
-
-            <!--if(meas.last_value< 900){-->
-                <!--document.getElementById('level_sensor_value').innerHTML = "Normal";-->
-                <!--document.getElementById('level_status').src = "images/png/checked.png"-->
-            <!--}-->
-            <!--else{-->
-                <!--document.getElementById('level_sensor_value').innerHTML = "Low";-->
-                <!--document.getElementById('level_status').src = "images/png/cancel.png"-->
-            <!--}-->
-
-
-        <!--});-->
-        <!--//check the water level-->
-
-        <!--//tank water level-->
-        <!--api.getMeasurement("waziup", "AGRITECHS_Sensor4", "TL").then((meas) =>{-->
-
-            <!--document.getElementById("tank_sensor_value").innerHTML = meas.last_value + "%";-->
-
-            <!--if(meas.last_value<10){-->
-                <!--document.getElementById('tank_status').src = "images/png/cancel.png"-->
-            <!--}-->
-            <!--else {-->
-                <!--document.getElementById('tank_status').src = "images/png/checked.png"-->
-            <!--}-->
-        <!--})-->
-    <!--</script>-->
-
-
 </head>
 <body>
 
@@ -227,26 +243,26 @@
                                                                                                                                               width="20" height="20">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Tank level</a>
                 </li>
 
-                <li class="menu-title">History</li><!-- /.menu-title -->
-                <li class="menu-item">
-                    <a href="#" aria-haspopup="true" aria-expanded="false"> <img src="images/png/013-test-1.png"
-                                                                                 width="20" height="20">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  Ph</a>
+                <!--<li class="menu-title">History</li>&lt;!&ndash; /.menu-title &ndash;&gt;-->
+                <!--<li class="menu-item">-->
+                    <!--<a href="#" aria-haspopup="true" aria-expanded="false"> <img src="images/png/013-test-1.png"-->
+                                                                                 <!--width="20" height="20">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  Ph</a>-->
 
-                </li>
-                <li class="menu-item">
-                    <a href="#" aria-haspopup="true" aria-expanded="false"> <img src="images/png/012-arrow-up-water-level-1.png"
-                                                                                 width="20" height="20">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Water Level</a>
+                <!--</li>-->
+                <!--<li class="menu-item">-->
+                    <!--<a href="#" aria-haspopup="true" aria-expanded="false"> <img src="images/png/012-arrow-up-water-level-1.png"-->
+                                                                                 <!--width="20" height="20">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Water Level</a>-->
 
-                </li>
-                <li class="menu-item">
-                    <a href="#" aria-haspopup="true" aria-expanded="false"> <img src="images/png/014-thermometer-1.png"
-                                                                                 width="20" height="20">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Temperature</a>
+                <!--</li>-->
+                <!--<li class="menu-item">-->
+                    <!--<a href="#" aria-haspopup="true" aria-expanded="false"> <img src="images/png/014-thermometer-1.png"-->
+                                                                                 <!--width="20" height="20">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Temperature</a>-->
 
-                </li>
-                <li class="menu-item">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img src="images/png/water-tank%20(1).png"
-                                                                                                                                width="20" height="20">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Tank level</a>
-                </li>
+                <!--</li>-->
+                <!--<li class="menu-item">-->
+                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img src="images/png/water-tank%20(1).png"-->
+                                                                                                                                <!--width="20" height="20">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Tank level</a>-->
+                <!--</li>-->
 
             </ul>
         </div><!-- /.navbar-collapse -->
