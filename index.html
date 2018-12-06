@@ -112,7 +112,7 @@
             }
         })
         //water level
-        api.getMeasurement("waziup", "ISPACE_Sensor4", "HL").then((meas) =>{
+        api.getMeasurement("waziup", "AGRITECHS_Sensor4", "HL").then((meas) =>{
 
             if(meas.last_value< 900){
                 document.getElementById('level_sensor_value').innerHTML = "Normal";
@@ -128,7 +128,7 @@
         //check the water level
 
         //tank water level
-        api.getMeasurement("waziup", "ISPACE_Sensor4", "TL").then((meas) =>{
+        api.getMeasurement("waziup", "AGRITECHS_Sensor4", "TL").then((meas) =>{
 
             document.getElementById("tank_sensor_value").innerHTML = meas.last_value + "%";
 
