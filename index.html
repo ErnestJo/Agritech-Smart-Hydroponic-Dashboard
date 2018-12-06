@@ -73,7 +73,7 @@
         var api = new Waziup.SensorsApi()
         var data = []
         var labels = []
-        api.getMeasurementValues("waziup", "ISPACE_Sensor4", "TC", {'lastN': "20"}).then((values) =>{
+        api.getMeasurementValues("waziup", "AGRITECHS_Sensor4", "TC", {'lastN': "20"}).then((values) =>{
             console.log("data" + JSON.stringify(values))
             for(value of values) {
                 data.push(value.value)
